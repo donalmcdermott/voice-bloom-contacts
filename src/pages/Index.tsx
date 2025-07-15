@@ -1,12 +1,29 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { BottomNavigation } from "@/components/BottomNavigation";
+import { MicScreen } from "./MicScreen";
+import { ContactsScreen } from "./ContactsScreen";
+import { SettingsScreen } from "./SettingsScreen";
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState("mic");
+
+  const renderScreen = () => {
+    switch (activeTab) {
+      case "contacts":
+        return <ContactsScreen />;
+      case "mic":
+        return <MicScreen />;
+      case "settings":
+        return <SettingsScreen />;
+      default:
+        return <MicScreen />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background text-foreground flex flex-col max-w-md mx-auto">
+      {renderScreen()}
+      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 };
